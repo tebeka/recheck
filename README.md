@@ -1,6 +1,6 @@
 # recheck
 
-**PRE ALPHA: No Code Yet**
+**WARNING: Alpha quality code**
 
 recheck is a program for validating regular expressions in go programs.
 
