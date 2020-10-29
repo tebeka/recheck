@@ -1,4 +1,8 @@
-// Package recheck provides a static checker for regular expressions
+/* Package recheck provides a static checker for regular expressions
+
+`receck` examines called to `regexp.*Compile*` and if the regular expression is
+a literal string - will check that it's valid.
+*/
 package recheck
 
 import (
