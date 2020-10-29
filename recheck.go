@@ -1,3 +1,4 @@
+// Package recheck provides a static checker for regular expressions
 package recheck
 
 import (
@@ -11,6 +12,7 @@ import (
 	"golang.org/x/tools/go/analysis"
 )
 
+// Analyzer a regular expression analyzer
 var Analyzer = &analysis.Analyzer{
 	Name: "recheck",
 	Doc:  "Validate regular expressions",
@@ -31,6 +33,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			if !ok {
 				return true
 			}
+
 			funcName := nodeFuncName(ce)
 			if !regexpFuncs[funcName] {
 				return true

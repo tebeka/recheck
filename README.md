@@ -12,3 +12,7 @@ examining returned error of `regexp.Compile` or having `regexp.MustCompile`
 panic (usually in `init`).
 
 recheck allows you to check your regular expressions at test/lint time.
+
+## Install
+
+    go get github.com/tebeka/recheck/cmd/recheck
