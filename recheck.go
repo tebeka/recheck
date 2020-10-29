@@ -42,7 +42,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			}
 
 			// Trim enclosing "" or ``
-			expr := strconv.Quote(val.Value[1 : len(val.Value)-2])
+			expr := strconv.Quote(val.Value[1 : len(val.Value)-1])
 			var check func(string) (*regexp.Regexp, error)
 			if strings.HasSuffix(funcName, "POSIX") {
 				check = regexp.CompilePOSIX
