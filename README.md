@@ -1,9 +1,8 @@
 # recheck
 
-**WARNING: Alpha quality code**
+**WARNING: β quality code**
 
 recheck is a program for validating regular expressions in go programs.
-
 
 ## Why?
 
