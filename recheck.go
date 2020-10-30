@@ -83,6 +83,11 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				return true
 			}
 
+			if val.Kind != token.STRING {
+				// TODO: warning
+				return true
+			}
+
 			// Trim enclosing "" or ``
 			expr := strconv.Quote(val.Value[1 : len(val.Value)-1])
 			_, err := check(expr)
