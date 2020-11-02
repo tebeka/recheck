@@ -51,12 +51,11 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			}
 
 			var check func(string) (*regexp.Regexp, error)
-			argNum := -1
+			argNum, byUser := -1, false
 
 			lnum := pass.Fset.Position(node.Pos()).Line
-			if n, ok := checkedLines[lnum]; ok {
+			if argNum, byUser = checkedLines[lnum]; byUser {
 				check = regexp.Compile
-				argNum = n
 			} else {
 				funcName := nodeFuncName(ce)
 				if regexpFuncs[funcName] {
@@ -74,17 +73,22 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			}
 
 			if argNum >= len(ce.Args) {
-				// TODO: warning
+				pass.Reportf(
+					node.Pos(),
+					"bad argument number: %d > %d", argNum, len(ce.Args))
 				return true
 			}
 
 			val, ok := ce.Args[argNum].(*ast.BasicLit)
 			if !ok {
+				if byUser {
+					pass.Reportf(node.Pos(), "argument %d not a literal", argNum)
+				}
 				return true
 			}
 
 			if val.Kind != token.STRING {
-				// TODO: warning
+				pass.Reportf(node.Pos(), "argument %d not a string", argNum)
 				return true
 			}
 
@@ -129,7 +133,8 @@ func comments(fset *token.FileSet, cg []*ast.CommentGroup) map[int]int {
 
 			argNum := commentArg(text)
 			if argNum == -1 {
-				// TODO: warning
+				// TODO: panic?
+				// We shouldn't be here since commentRe should match only valid
 				continue
 			}
 
