@@ -50,8 +50,11 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				return true
 			}
 
-			var check func(string) (*regexp.Regexp, error)
-			argNum, byUser := -1, false
+			var (
+				check  func(string) (*regexp.Regexp, error)
+				argNum int
+				byUser bool
+			)
 
 			lnum := pass.Fset.Position(node.Pos()).Line
 			if argNum, byUser = checkedLines[lnum]; byUser {
