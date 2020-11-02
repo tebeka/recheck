@@ -7,16 +7,33 @@ import (
 
 // FIXME: go.mod & go.test are changed after running the test
 
+type TestWriter struct {
+	prefix string
+	t      *testing.T
+}
+
+func (t *TestWriter) Write(data []byte) (int, error) {
+	t.t.Logf("%s: %s\n", t.prefix, string(data))
+	return len(data), nil
+}
+
+func runCmd(t *testing.T, args ...string) error {
+	cmd := exec.Command(args[0], args[1:]...)
+	cmd.Stdout = &TestWriter{"STDOUT", t}
+	cmd.Stderr = &TestWriter{"STDERR", t}
+	return cmd.Run()
+}
+
 func TestOK(t *testing.T) {
-	cmd := exec.Command("go", "run", "./cmd/recheck", "testdata/ok.go")
-	if err := cmd.Run(); err != nil {
+	err := runCmd(t, "go", "run", "./cmd/recheck", "testdata/ok.go")
+	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func TestBad(t *testing.T) {
-	cmd := exec.Command("go", "run", "./cmd/recheck", "testdata/bad.go")
-	if err := cmd.Run(); err == nil {
+	err := runCmd(t, "go", "run", "./cmd/recheck", "testdata/bad.go")
+	if err == nil {
 		t.Fatal(err)
 	}
 }
