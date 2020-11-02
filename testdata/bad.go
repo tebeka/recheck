@@ -1,4 +1,5 @@
-// If you add/remove test cases here, update numErrors in regression_test.go:TestBad
+// If you add/remove test cases here, update numErrors in
+// regression_test.go:TestBad
 package main
 
 import (
