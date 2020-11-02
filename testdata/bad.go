@@ -1,3 +1,4 @@
+// If you add/remove test cases here, update numErrors in regression_test.go:TestBad
 package main
 
 import (
@@ -7,6 +8,7 @@ import (
 
 var (
 	re1 = regexp.MustCompile(`[a-zA-Z`)
+	re2 = regexp.MustCompilePOSIX(`[a-zA-Z`)
 )
 
 func handleFunc(func(http.ResponseWriter, *http.Request), string) {}

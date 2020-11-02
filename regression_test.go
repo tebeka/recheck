@@ -50,7 +50,7 @@ func TestBad(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	const numErrors = 4
+	const numErrors = 5
 	buf := cmd.Stderr.(*bytes.Buffer)
 	if n := errCount(t, buf); n != numErrors {
 		t.Fatalf("expected %d errors, found %d", numErrors, n)
