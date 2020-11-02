@@ -1,6 +1,7 @@
 package recheck
 
 import (
+	"os"
 	"os/exec"
 	"testing"
 )
@@ -19,8 +20,10 @@ func (t *TestWriter) Write(data []byte) (int, error) {
 
 func runCmd(t *testing.T, args ...string) error {
 	cmd := exec.Command(args[0], args[1:]...)
-	cmd.Stdout = &TestWriter{"STDOUT", t}
-	cmd.Stderr = &TestWriter{"STDERR", t}
+	if os.Getenv("DEBUG") != "" {
+		cmd.Stdout = &TestWriter{"STDOUT", t}
+		cmd.Stderr = &TestWriter{"STDERR", t}
+	}
 	return cmd.Run()
 }
 

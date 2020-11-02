@@ -11,8 +11,9 @@ var (
 	re3 = regexp.MustCompile(`\d`)
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {}
+func handleFunc(func(http.ResponseWriter, *http.Request), string) {}
+func handler(w http.ResponseWriter, r *http.Request)              {}
 
 func main() {
-	http.HandleFunc("/articles/{category}/{id:[0-9]+}", handler) // recheck:0
+	handleFunc(handler, "/users/{id:[0-9]+}") // recheck:1
 }
