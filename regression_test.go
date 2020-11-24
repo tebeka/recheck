@@ -1,3 +1,7 @@
+/*
+FIXME: I'm having hard time using golang.org/x/tools/go/analysis/analysistest
+with the `recheck:<n>` comments.
+*/
 package recheck
 
 import (
